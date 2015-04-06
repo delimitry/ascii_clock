@@ -3,8 +3,6 @@
 # Author: delimitry
 #-----------------------------------------------------------------------
 
-import os
-
 
 class AsciiCanvas(object):
     """
@@ -15,30 +13,26 @@ class AsciiCanvas(object):
         """
         Initialize ASCII canvas
         """
-        self.cols = cols + 1
-        self.lines = lines + 1
+        self.cols = cols
+        self.lines = lines
         if not fill_char:
             fill_char = ' '
         elif len(fill_char) > 1:
             fill_char = fill_char[0]
         self.fill_char = fill_char
         self.canvas = [[fill_char] * (cols) for _ in xrange(lines)]
-        # set console window size and screen buffer size
-        os.system('mode con: cols=%s lines=%s' % (self.cols, self.lines))
 
     def clear(self):
         """
         Fill canvas with empty chars
         """
-        self.canvas = [[self.fill_char] * (self.cols - 1) for _ in xrange(self.lines - 1)]
+        self.canvas = [[self.fill_char] * (self.cols) for _ in xrange(self.lines)]
 
-    def print_out(self, clear=False):
+    def print_out(self):
         """
         Print out canvas to console
         """
-        if clear:
-            os.system('cls' if os.name == 'nt' else 'clear')
-        print('\n'.join([''.join(col) for col in self.canvas]))
+        print(self.get_canvas_as_str())
 
     def add_line(self, x0, y0, x1, y1, fill_char='o'):
         """
@@ -111,9 +105,9 @@ class AsciiCanvas(object):
         Add nine-patch rectangle
         """
         default_outline_3x3_chars = (
-        '/', '-', '\\',
-        '|', ' ', '|',
-        '\\', '_', '/'
+            '.', '-', '.', 
+            '|', ' ', '|', 
+            '`', '-', "'"
         )
         if not outline_3x3_chars:
             outline_3x3_chars = default_outline_3x3_chars
@@ -151,4 +145,16 @@ class AsciiCanvas(object):
         """
         Check that coordinate (x, y) is in range, to prevent out of range error
         """
-        return 0 <= x < self.cols - 1 and 0 <= y < self.lines - 1
+        return 0 <= x < self.cols and 0 <= y < self.lines
+
+    def get_canvas_as_str(self):
+        """
+        Return canvas as a string
+        """
+        return '\n'.join([''.join(col) for col in self.canvas])
+
+    def __str__(self):
+        """
+        Return canvas as a string
+        """
+        return self.get_canvas_as_str()
