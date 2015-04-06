@@ -62,18 +62,18 @@ class AsciiCanvas(object):
             return
         # when dx >= dy use fill by x-axis, and use fill by y-axis otherwise
         if abs(dx) >= abs(dy):
-            for x in xrange(x0, x1):
+            for x in xrange(x0, x1 + 1):
                 y = y0 if dx == 0 else y0 + int(round((x - x0) * dy / float((dx))))
                 if self.check_coord_in_range(x, y):
                     self.canvas[y][x] = fill_char
         else:
             if y0 < y1:
-                for y in xrange(y0, y1, 1):
+                for y in xrange(y0, y1 + 1):
                     x = x0 if dy == 0 else x0 + int(round((y - y0) * dx / float((dy))))
                     if self.check_coord_in_range(x, y):
                         self.canvas[y][x] = fill_char
             else:
-                for y in xrange(y1, y0):
+                for y in xrange(y1, y0 + 1):
                     x = x0 if dy == 0 else x1 + int(round((y - y1) * dx / float((dy))))
                     if self.check_coord_in_range(x, y):
                         self.canvas[y][x] = fill_char
