@@ -6,13 +6,15 @@
 
 class AsciiCanvas(object):
     """
-    ASCII canvas for draw in console using ASCII chars
+    ASCII canvas for drawing in console using ASCII chars
     """
 
     def __init__(self, cols, lines, fill_char=' '):
         """
         Initialize ASCII canvas
         """
+        if cols < 1 or cols > 1000 or lines < 1 or lines > 1000:
+            raise Exception('Canvas cols/lines must be in range [1..1000]')
         self.cols = cols
         self.lines = lines
         if not fill_char:
@@ -100,7 +102,7 @@ class AsciiCanvas(object):
                     else:
                         self.canvas[py][px] = fill_char
 
-    def add_rect_nine_patch(self, x, y, w, h, outline_3x3_chars=None):
+    def add_nine_patch_rect(self, x, y, w, h, outline_3x3_chars=None):
         """
         Add nine-patch rectangle
         """

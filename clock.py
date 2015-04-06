@@ -101,9 +101,9 @@ def draw_clock(cols, lines):
     # add regions with weekday and day if possible
     if center_x > 25:
         left_pos = int(radius * x_scale_ratio) / 2 - 4
-        ascii_canvas.add_rect_nine_patch(center_x + left_pos, center_y - 1, 5, 3, single_line_border_chars)
+        ascii_canvas.add_nine_patch_rect(center_x + left_pos, center_y - 1, 5, 3, single_line_border_chars)
         ascii_canvas.add_text(center_x + left_pos + 1, center_y, now.strftime('%a'))
-        ascii_canvas.add_rect_nine_patch(center_x + left_pos + 5, center_y - 1, 4, 3, single_line_border_chars)
+        ascii_canvas.add_nine_patch_rect(center_x + left_pos + 5, center_y - 1, 4, 3, single_line_border_chars)
         ascii_canvas.add_text(center_x + left_pos + 1 + 5, center_y, now.strftime('%d'))
     # add clock hands
     draw_second_hand(ascii_canvas, now.second, second_hand_length, fill_char=second_hand_char)
