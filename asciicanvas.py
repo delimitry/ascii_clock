@@ -34,7 +34,7 @@ class AsciiCanvas(object):
         """
         Print out canvas to console
         """
-        print(self.get_canvas_as_str().encode('utf-8'))
+        print(self.get_canvas_as_str())
 
     def add_line(self, x0, y0, x1, y1, fill_char='o'):
         """
