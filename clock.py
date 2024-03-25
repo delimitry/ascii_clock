@@ -95,7 +95,8 @@ def draw_clock(cols, lines):
     minute_hand_length = int(radius / 1.25)
     hour_hand_length = int(radius / 1.95)
     # add clock region and clock face
-    ascii_canvas.add_rect(5, 3, int(math.floor(cols / 2.0)) * 2 - 9, int(math.floor(lines / 2.0)) * 2 - 5)
+    # removed rectangle around clock, uncomment to add it again
+    # ascii_canvas.add_rect(5, 3, int(math.floor(cols / 2.0)) * 2 - 9, int(math.floor(lines / 2.0)) * 2 - 5)
     draw_clock_face(ascii_canvas, radius, mark_char)
     now = datetime.datetime.now()
     # add regions with weekday and day if possible
@@ -122,7 +123,7 @@ def main():
     while True:
        os.system('cls' if os.name == 'nt' else 'clear')
        draw_clock(cols, lines)
-       time.sleep(0.2)
+       time.sleep(1)
 
 
 if __name__ == '__main__':
