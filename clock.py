@@ -13,6 +13,12 @@ from asciicanvas import AsciiCanvas
 
 x_scale_ratio = 1.75
 
+# Function to hide the cursor in the terminal 
+def hide_cursor(): 
+    print('\033[?25l', end='') 
+# Function to show the cursor in the terminal 
+def show_cursor():
+    print('\033[?25h', end='')
 
 def draw_second_hand(ascii_canvas, seconds, length, fill_char):
     """
@@ -95,7 +101,8 @@ def draw_clock(cols, lines):
     minute_hand_length = int(radius / 1.25)
     hour_hand_length = int(radius / 1.95)
     # add clock region and clock face
-    ascii_canvas.add_rect(5, 3, int(math.floor(cols / 2.0)) * 2 - 9, int(math.floor(lines / 2.0)) * 2 - 5)
+    # removed rectangle around clock, uncomment to add it again
+    # ascii_canvas.add_rect(5, 3, int(math.floor(cols / 2.0)) * 2 - 9, int(math.floor(lines / 2.0)) * 2 - 5)
     draw_clock_face(ascii_canvas, radius, mark_char)
     now = datetime.datetime.now()
     # add regions with weekday and day if possible
@@ -112,18 +119,27 @@ def draw_clock(cols, lines):
     # print out canvas
     ascii_canvas.print_out()
 
-
 def main():
     lines = 40
     cols = int(lines * x_scale_ratio)
-    # set console window size and screen buffer size
-    if os.name == 'nt':
-        os.system('mode con: cols=%s lines=%s' % (cols + 1, lines + 1))
-    while True:
-       os.system('cls' if os.name == 'nt' else 'clear')
-       draw_clock(cols, lines)
-       time.sleep(0.2)
-
-
+    # Hide the cursor     
+    hide_cursor()
+    try:  # You need to start with a try block
+        # set console window size and screen buffer size
+        if os.name == 'nt':
+            os.system('mode con: cols=%s lines=%s' % (cols + 1, lines + 1))
+        while True:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            draw_clock(cols, lines)
+            time.sleep(1)
+    except KeyboardInterrupt:      
+        # This block catches CTRL-C, allowing for a graceful exit     
+        pass
+    finally:
+        # Ensure the cursor is shown again when the script exits         
+        show_cursor()
+        print("\nGoodbye!")  # Optional: print a goodbye message, properly indented
+    
 if __name__ == '__main__':
     main()
+
